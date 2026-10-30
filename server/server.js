@@ -18,7 +18,9 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({ success: true, message: 'Nestora API is running' });
 });
 
-// Feature routers (auth, rooms, fees...) will be mounted here in later steps.
+app.use('/api/auth', require('./routes/authRoutes'));
+
+// More routers (rooms, fees...) will be mounted here in later steps.
 
 // ---------- Error handling (must come LAST) ----------
 app.use(notFound);
