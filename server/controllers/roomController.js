@@ -15,6 +15,20 @@ const OCCUPANT_FIELDS = 'name email phone course';
 // Adds the computed status to a room before sending it
 const withStatus = (room) => ({ ...room.toObject(), status: getRoomStatus(room) });
 
+// GET /api/rooms/mine  (any logged-in user) - the room I am in, with roommates
+const getMyRoom = async (req, res, next) => {
+  try {
+    const room = await Room.findOne({ occupants: req.user._id }).populate(
+      'occupants',
+      OCCUPANT_FIELDS
+    );
+    // No room yet is not an error: the dashboard shows "not allotted"
+    res.status(200).json({ success: true, room: room ? withStatus(room) : null });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // GET /api/rooms  (warden) - all rooms with occupants filled in
 const getRooms = async (req, res, next) => {
   try {
@@ -255,6 +269,6 @@ const getRoomStats = async (req, res, next) => {
 };
 
 module.exports = {
-  getRooms, getRoomById, updateRoom, allotStudent,
+  getRooms, getRoomById, getMyRoom, updateRoom, allotStudent,
   vacateStudent, createRoom, deleteRoom, getRoomStats,
 };

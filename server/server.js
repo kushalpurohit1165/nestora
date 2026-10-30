@@ -26,8 +26,7 @@ app.use('/api/notices', require('./routes/noticeRoutes'));
 app.use('/api/complaints', require('./routes/complaintRoutes'));
 app.use('/api/students', require('./routes/studentRoutes'));
 app.use('/api/rooms', require('./routes/roomRoutes'));
-
-// The fees router will be mounted here in the next step.
+app.use('/api/fees', require('./routes/feeRoutes'));
 
 // ---------- Error handling (must come LAST) ----------
 app.use(notFound);
