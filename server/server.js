@@ -19,8 +19,12 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/pricing', require('./routes/pricingRoutes'));
+app.use('/api/menu', require('./routes/menuRoutes'));
+app.use('/api/info', require('./routes/infoRoutes'));
+app.use('/api/notices', require('./routes/noticeRoutes'));
 
-// More routers (rooms, fees...) will be mounted here in later steps.
+// More routers (rooms, fees, complaints...) will be mounted here in later steps.
 
 // ---------- Error handling (must come LAST) ----------
 app.use(notFound);
