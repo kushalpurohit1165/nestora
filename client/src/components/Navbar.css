@@ -6,3 +6,8 @@
 .nav-links { display: flex; gap: 18px; flex-wrap: wrap; }
 .nav-links a { color: var(--text); font-weight: 500; }
 .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 600px) {
+  .navbar-inner { justify-content: center; }
+  .nav-links { order: 3; width: 100%; justify-content: center; }
+}
