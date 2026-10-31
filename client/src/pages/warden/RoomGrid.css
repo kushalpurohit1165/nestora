@@ -1,0 +1,22 @@
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; }
+.dot { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.dot.full, .tile.full { background: var(--room-full); }
+.dot.partial, .tile.partial { background: var(--room-partial); }
+.dot.vacant, .tile.vacant { background: var(--room-vacant); }
+.dot.maint, .tile.maint { background: var(--room-maint); }
+
+.grid-layout { display: grid; grid-template-columns: 1fr 300px; gap: 16px; align-items: start; }
+.room-table td { vertical-align: middle; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(58px, 1fr)); gap: 6px; }
+.tile {
+  display: flex; flex-direction: column; align-items: center; padding: 8px 2px;
+  border: 2px solid transparent; border-radius: var(--radius);
+  color: #fff; cursor: pointer; font-family: var(--font-head); font-size: 12px; font-weight: 600;
+}
+.tile small { font-family: var(--font-body); font-weight: 400; font-size: 11px; }
+.tile.partial { color: #111; }
+.tile.selected { border-color: #111; }
+
+@media (max-width: 1000px) {
+  .grid-layout { grid-template-columns: 1fr; }
+}

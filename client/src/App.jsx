@@ -12,6 +12,8 @@ import Register from "./pages/Register.jsx";
 import StudentDashboard from "./pages/student/StudentDashboard.jsx";
 import MyComplaints from "./pages/student/MyComplaints.jsx";
 import MyFees from "./pages/student/MyFees.jsx";
+import WardenDashboard from "./pages/warden/WardenDashboard.jsx";
+import RoomGrid from "./pages/warden/RoomGrid.jsx";
 
 function App() {
   return (
@@ -38,14 +40,8 @@ function App() {
         {/* Warden pages: only the warden */}
         <Route element={<ProtectedRoute role="warden" />}>
           <Route element={<DashboardLayout />}>
-            <Route
-              path="/warden"
-              element={<Placeholder title="Warden Dashboard" />}
-            />
-            <Route
-              path="/warden/rooms"
-              element={<Placeholder title="Room Grid" />}
-            />
+            <Route path="/warden" element={<WardenDashboard />} />
+            <Route path="/warden/rooms" element={<RoomGrid />} />
             <Route
               path="/rooms/:id"
               element={<Placeholder title="Room Details" />}
