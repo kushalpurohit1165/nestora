@@ -1,0 +1,9 @@
+.dash-main { margin-left: 230px; min-height: 100vh; }
+.dash-content { padding: 24px; max-width: 1200px; }
+.dash-menu-btn { display: none; margin: 12px 0 0 16px; }
+
+@media (max-width: 800px) {
+  .dash-main { margin-left: 0; }
+  .dash-menu-btn { display: inline-block; }
+  .dash-content { padding: 16px; }
+}

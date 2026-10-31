@@ -1,53 +1,94 @@
-// Temporary page to test api.js, AuthContext and ToastContext. Replaced in Step 11c.
-import api, { getErrorMessage } from './api';
-import { useAuth } from './context/AuthContext.jsx';
-import { useToast } from './context/ToastContext.jsx';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PublicLayout from "./layouts/PublicLayout.jsx";
+import DashboardLayout from "./layouts/DashboardLayout.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import Placeholder from "./pages/Placeholder.jsx";
+import NotFound from "./pages/NotFound.jsx";
+import Login from "./pages/Login.jsx";
 
 function App() {
-  const { user, login, logout } = useAuth();
-  const { showToast } = useToast();
-
-  const testPublicApi = async () => {
-    try {
-      const { data } = await api.get('/pricing');
-      showToast(`Mess charge is ₹${data.pricing.messCharge}`);
-    } catch (err) {
-      showToast(getErrorMessage(err), 'error');
-    }
-  };
-
-  const loginWarden = async () => {
-    try {
-      await login('warden@nestora.com', 'warden123');
-      showToast('Logged in as warden');
-    } catch (err) {
-      showToast(getErrorMessage(err), 'error');
-    }
-  };
-
-  const testProtectedApi = async () => {
-    try {
-      const { data } = await api.get('/rooms/stats');
-      showToast(`Total rooms: ${data.stats.totals.totalRooms}`);
-    } catch (err) {
-      showToast(getErrorMessage(err), 'error');
-    }
-  };
-
   return (
-    <div className="container page">
-      <h1 className="page-title">Nestora</h1>
-      <p className="page-sub">
-        {user ? `Logged in: ${user.name} (${user.role})` : 'Not logged in'}
-      </p>
+    <BrowserRouter>
+      <Routes>
+        {/* Public pages: anyone can open them */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Placeholder title="Home" />} />
+          <Route
+            path="/mess-menu"
+            element={<Placeholder title="Mess Menu" />}
+          />
+          <Route
+            path="/rules"
+            element={<Placeholder title="Rules and Facilities" />}
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Placeholder title="Register" />} />
+        </Route>
 
-      <div className="row">
-        <button className="btn" onClick={testPublicApi}>Test public API</button>
-        <button className="btn btn-accent" onClick={loginWarden}>Login as warden</button>
-        <button className="btn btn-outline" onClick={testProtectedApi}>Test protected API</button>
-        <button className="btn btn-danger" onClick={logout}>Logout</button>
-      </div>
-    </div>
+        {/* Student pages: only logged-in students */}
+        <Route element={<ProtectedRoute role="student" />}>
+          <Route element={<DashboardLayout />}>
+            <Route
+              path="/student"
+              element={<Placeholder title="Student Dashboard" />}
+            />
+            <Route
+              path="/student/complaints"
+              element={<Placeholder title="My Complaints" />}
+            />
+            <Route
+              path="/student/fees"
+              element={<Placeholder title="My Fees" />}
+            />
+          </Route>
+        </Route>
+
+        {/* Warden pages: only the warden */}
+        <Route element={<ProtectedRoute role="warden" />}>
+          <Route element={<DashboardLayout />}>
+            <Route
+              path="/warden"
+              element={<Placeholder title="Warden Dashboard" />}
+            />
+            <Route
+              path="/warden/rooms"
+              element={<Placeholder title="Room Grid" />}
+            />
+            <Route
+              path="/rooms/:id"
+              element={<Placeholder title="Room Details" />}
+            />
+            <Route
+              path="/warden/fees"
+              element={<Placeholder title="Manage Fees" />}
+            />
+            <Route
+              path="/warden/complaints"
+              element={<Placeholder title="Manage Complaints" />}
+            />
+            <Route
+              path="/warden/notices"
+              element={<Placeholder title="Manage Notices" />}
+            />
+            <Route
+              path="/warden/pricing"
+              element={<Placeholder title="Manage Pricing" />}
+            />
+            <Route
+              path="/warden/menu"
+              element={<Placeholder title="Manage Mess Menu" />}
+            />
+            <Route
+              path="/warden/info"
+              element={<Placeholder title="Manage Rules and Facilities" />}
+            />
+          </Route>
+        </Route>
+
+        {/* Anything else */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
