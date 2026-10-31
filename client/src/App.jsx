@@ -1,27 +1,51 @@
-// Temporary page just to check the fonts and colours. We replace it in Step 11c.
+// Temporary page to test api.js, AuthContext and ToastContext. Replaced in Step 11c.
+import api, { getErrorMessage } from './api';
+import { useAuth } from './context/AuthContext.jsx';
+import { useToast } from './context/ToastContext.jsx';
+
 function App() {
+  const { user, login, logout } = useAuth();
+  const { showToast } = useToast();
+
+  const testPublicApi = async () => {
+    try {
+      const { data } = await api.get('/pricing');
+      showToast(`Mess charge is ₹${data.pricing.messCharge}`);
+    } catch (err) {
+      showToast(getErrorMessage(err), 'error');
+    }
+  };
+
+  const loginWarden = async () => {
+    try {
+      await login('warden@nestora.com', 'warden123');
+      showToast('Logged in as warden');
+    } catch (err) {
+      showToast(getErrorMessage(err), 'error');
+    }
+  };
+
+  const testProtectedApi = async () => {
+    try {
+      const { data } = await api.get('/rooms/stats');
+      showToast(`Total rooms: ${data.stats.totals.totalRooms}`);
+    } catch (err) {
+      showToast(getErrorMessage(err), 'error');
+    }
+  };
+
   return (
     <div className="container page">
       <h1 className="page-title">Nestora</h1>
-      <p className="page-sub">Hostel Management System</p>
+      <p className="page-sub">
+        {user ? `Logged in: ${user.name} (${user.role})` : 'Not logged in'}
+      </p>
 
-      <div className="row mb">
-        <button className="btn">Primary</button>
-        <button className="btn btn-accent">Accent</button>
-        <button className="btn btn-outline">Outline</button>
-        <button className="btn btn-danger">Delete</button>
-      </div>
-
-      <div className="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Type</th><th>Amount</th><th>Status</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Rent</td><td>₹4,500</td><td><span className="tag tag-paid">Paid</span></td></tr>
-            <tr><td>Mess</td><td>₹3,000</td><td><span className="tag tag-overdue">Overdue</span></td></tr>
-          </tbody>
-        </table>
+      <div className="row">
+        <button className="btn" onClick={testPublicApi}>Test public API</button>
+        <button className="btn btn-accent" onClick={loginWarden}>Login as warden</button>
+        <button className="btn btn-outline" onClick={testProtectedApi}>Test protected API</button>
+        <button className="btn btn-danger" onClick={logout}>Logout</button>
       </div>
     </div>
   );
