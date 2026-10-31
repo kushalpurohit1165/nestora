@@ -1,19 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PublicLayout from "./layouts/PublicLayout.jsx";
-import DashboardLayout from "./layouts/DashboardLayout.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Placeholder from "./pages/Placeholder.jsx";
-import NotFound from "./pages/NotFound.jsx";
-import Login from "./pages/Login.jsx";
-import Home from "./pages/Home.jsx";
-import MessMenu from "./pages/MessMenu.jsx";
-import Rules from "./pages/Rules.jsx";
-import Register from "./pages/Register.jsx";
-import StudentDashboard from "./pages/student/StudentDashboard.jsx";
-import MyComplaints from "./pages/student/MyComplaints.jsx";
-import MyFees from "./pages/student/MyFees.jsx";
-import WardenDashboard from "./pages/warden/WardenDashboard.jsx";
-import RoomGrid from "./pages/warden/RoomGrid.jsx";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PublicLayout from './layouts/PublicLayout.jsx';
+import DashboardLayout from './layouts/DashboardLayout.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import Placeholder from './pages/Placeholder.jsx';
+import NotFound from './pages/NotFound.jsx';
+import Login from './pages/Login.jsx';
+import Home from './pages/Home.jsx';
+import MessMenu from './pages/MessMenu.jsx';
+import Rules from './pages/Rules.jsx';
+import Register from './pages/Register.jsx';
+import StudentDashboard from './pages/student/StudentDashboard.jsx';
+import MyComplaints from './pages/student/MyComplaints.jsx';
+import MyFees from './pages/student/MyFees.jsx';
+import WardenDashboard from './pages/warden/WardenDashboard.jsx';
+import RoomGrid from './pages/warden/RoomGrid.jsx';
+import RoomDetails from './pages/warden/RoomDetails.jsx';
+import ManageFees from './pages/warden/ManageFees.jsx';
+import ManageComplaints from './pages/warden/ManageComplaints.jsx';
 
 function App() {
   return (
@@ -42,34 +45,13 @@ function App() {
           <Route element={<DashboardLayout />}>
             <Route path="/warden" element={<WardenDashboard />} />
             <Route path="/warden/rooms" element={<RoomGrid />} />
-            <Route
-              path="/rooms/:id"
-              element={<Placeholder title="Room Details" />}
-            />
-            <Route
-              path="/warden/fees"
-              element={<Placeholder title="Manage Fees" />}
-            />
-            <Route
-              path="/warden/complaints"
-              element={<Placeholder title="Manage Complaints" />}
-            />
-            <Route
-              path="/warden/notices"
-              element={<Placeholder title="Manage Notices" />}
-            />
-            <Route
-              path="/warden/pricing"
-              element={<Placeholder title="Manage Pricing" />}
-            />
-            <Route
-              path="/warden/menu"
-              element={<Placeholder title="Manage Mess Menu" />}
-            />
-            <Route
-              path="/warden/info"
-              element={<Placeholder title="Manage Rules and Facilities" />}
-            />
+            <Route path="/rooms/:id" element={<RoomDetails />} />
+            <Route path="/warden/fees" element={<ManageFees />} />
+            <Route path="/warden/complaints" element={<ManageComplaints />} />
+            <Route path="/warden/notices" element={<Placeholder title="Manage Notices" />} />
+            <Route path="/warden/pricing" element={<Placeholder title="Manage Pricing" />} />
+            <Route path="/warden/menu" element={<Placeholder title="Manage Mess Menu" />} />
+            <Route path="/warden/info" element={<Placeholder title="Manage Rules and Facilities" />} />
           </Route>
         </Route>
 
